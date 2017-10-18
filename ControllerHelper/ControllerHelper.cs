@@ -24,8 +24,9 @@ namespace Cstieg.ControllerHelper
         /// </summary>
         /// <param name="message">Error message to pass to front end</param>
         /// <returns>JSON error response</returns>
-        public static JsonResult JError(this Controller controller, string message="")
+        public static JsonResult JError(this Controller controller, int errorCode = 400, string message="")
         {
+            controller.Response.StatusCode = errorCode;
             return new JsonResult { Data = new { success = "False", message=message } };
         }
 
