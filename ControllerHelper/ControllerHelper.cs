@@ -53,5 +53,25 @@ namespace Cstieg.ControllerHelper
                 Type => Type.IsSubclassOf(typeof(T))).ToList();
 
         }
+
+        /// <summary>
+        /// Extension to check whether a controller has a given action
+        /// </summary>
+        /// <param name="actionName"></param>
+        /// <returns></returns>
+        public static bool HasAction(Type T, string actionName)
+        {  
+            try
+            {
+                var action = T.GetMethod(actionName, BindingFlags.IgnoreCase | BindingFlags.Public | BindingFlags.Instance);
+                return action != null
+                    && (action.ReturnType == typeof(ActionResult)
+                    || action.ReturnType.IsSubclassOf(typeof(ActionResult)));
+            }
+            catch (AmbiguousMatchException)
+            {
+                return true;
+            }
+        }
     }
 }
