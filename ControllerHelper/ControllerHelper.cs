@@ -15,9 +15,9 @@ namespace Cstieg.ControllerHelper
         /// <summary>
         /// Extension to return JSON success response
         /// </summary>
-        public static JsonResult JOk(this Controller controller)
+        public static JsonResult JOk(this Controller controller, object data = null)
         {
-            return new JsonResult { Data = new { success = "True" }, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+            return new JsonResult { Data = new { success = "True", data = data}, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }
 
         /// <summary>
@@ -25,10 +25,10 @@ namespace Cstieg.ControllerHelper
         /// </summary>
         /// <param name="message">Error message to pass to front end</param>
         /// <returns>JSON error response</returns>
-        public static JsonResult JError(this Controller controller, int errorCode = 400, string message = "")
+        public static JsonResult JError(this Controller controller, int errorCode = 400, string message = "", object data = null)
         {
             controller.Response.StatusCode = errorCode;
-            return new JsonResult { Data = new { success = "False", message = message }, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+            return new JsonResult { Data = new { success = "False", message = message, data = data } , JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }
 
         /// <summary>
